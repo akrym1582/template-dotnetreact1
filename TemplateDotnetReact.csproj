@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <SpaRoot>$(MSBuildProjectDirectory)/clientapp/</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);clientapp/**;artifacts/**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+    <Watch Remove="clientapp/**" />
+  </ItemGroup>
+
+  <Target Name="ExcludeClientAppFromWatch" AfterTargets="_CoreCollectWatchItems">
+    <ItemGroup>
+      <Watch Remove="$(SpaRoot)**" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="BuildClientForPublish" AfterTargets="ComputeFilesToPublish">
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm ci" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+    <ItemGroup>
+      <ClientDist Include="$(SpaRoot)dist/**" />
+      <ResolvedFileToPublish Include="@(ClientDist->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>wwwroot/%(ClientDist.RecursiveDir)%(ClientDist.Filename)%(ClientDist.Extension)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>
