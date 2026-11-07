@@ -17,6 +17,10 @@ dotnet run --project src/TemplateDotnetReact
 
 API だけを起動したい場合は `dotnet run --project src/TemplateDotnetReact --no-launch-profile --urls http://localhost:5080` を使います。開発ポートを変更する場合は `src/TemplateDotnetReact/Properties/launchSettings.json` と Vite のプロキシ先を合わせてください。プロキシ先は `API_URL` 環境変数でも上書きできます。
 
+## フォント
+
+画面の標準フォントは Noto Sans JP です。`@fontsource/noto-sans-jp` の 400（通常）と 700（太字）を読み込み、ビルドしたフォントをアプリから配信します。ライセンスは公開物の `/licenses/noto-sans-jp.txt` で確認できます。
+
 ## API クライアントの再生成
 
 ```sh
