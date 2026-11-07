@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterAll, afterEach, expect, test, vi } from "vitest";
 import { SWRConfig } from "swr";
-import { App } from "./App";
+import { GreetingPage } from "./GreetingPage";
 
 const fetchMock = vi.hoisted(() => {
   const mock = vi.fn<typeof fetch>();
@@ -18,7 +18,7 @@ afterAll(() => vi.unstubAllGlobals());
 function renderApp() {
   render(
     <SWRConfig value={{ provider: () => new Map(), shouldRetryOnError: false }}>
-      <App />
+      <GreetingPage />
     </SWRConfig>,
   );
 }

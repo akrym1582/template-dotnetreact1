@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Writers;
 using Swashbuckle.AspNetCore.Swagger;
 using TemplateDotnetReact.Development;
+using TemplateDotnetReact.Features.Greeting;
 
 bool exportOpenApi = args.Contains("--export-openapi", StringComparer.Ordinal);
 var builder = WebApplication.CreateBuilder(args.Where(arg => arg != "--export-openapi").ToArray());
@@ -26,8 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.MapGet("/api/greeting", () => TypedResults.Ok(new Greeting("ASP.NET Core からこんにちは")))
-    .WithName("GetGreeting");
+GreetingEndpoints.Map(app);
 
 app.MapFallback("/api/{**path}", () => Results.NotFound());
 app.MapFallbackToFile("index.html");
@@ -52,10 +52,6 @@ if (exportOpenApi)
 }
 
 await app.RunAsync();
-
-/// <summary>サンプル画面が API との接続を確認するための応答です。</summary>
-/// <param name="Message">画面に表示する挨拶文です。JSON では message として返します。</param>
-internal sealed record Greeting(string Message);
 
 /// <summary>
 /// 結合テストからアプリの起動処理を参照するための型です。

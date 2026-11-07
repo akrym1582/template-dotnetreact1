@@ -1,7 +1,7 @@
 import useAspidaSWR from "@aspida/swr";
-import { client } from "./client";
+import { client } from "../../client";
 
-export function App() {
+export function GreetingPage() {
   const { data, error, isLoading } = useAspidaSWR(client.api.greeting);
   return (
     <main className="mx-auto max-w-2xl px-6 py-16">

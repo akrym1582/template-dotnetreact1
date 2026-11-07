@@ -1,7 +1,8 @@
 # 開発ルール
 
 - ASP.NET Core の Web プロジェクトを `src/TemplateDotnetReact/` に 1 つ置き、React + TypeScript を `src/TemplateDotnetReact/clientapp/` に置く。
-- バックエンドは単一の Web 用 `.csproj` を基本とし、Controller・Service・Repository・Core はフォルダーで分ける。役割とトランザクションのルールは [バックエンドの設計方針](.agents/skills/develop-feature/references/backend-design.md) を参照する。
+- C# は `Features/<機能名>/`、React は `clientapp/src/features/<機能名>/` を基本とし、機能の実装とテストを近くに置く。機能固有の Filter、Extension、Hook は該当機能の中に置く。
+- バックエンドは単一の Web 用 `.csproj` を基本とする。Controller・Service・Repository・Core の役割は各機能内で整理する。詳しくは [バックエンドの設計方針](.agents/skills/develop-feature/references/backend-design.md) を参照する。
 - API は `/api` 配下に追加し、OpenAPI に公開する。型付きレスポンスを定義し、既存 API のパスとレスポンスの互換性を保つ。
 - フロントエンドは `src/TemplateDotnetReact/clientapp/src/client.ts` の aspida クライアントを使う。データ取得には既存の SWR パターンを使う。
 - API 契約を変更したら `npm --prefix src/TemplateDotnetReact/clientapp run update-api` を実行し、`src/TemplateDotnetReact/clientapp/openapi.json` と `src/TemplateDotnetReact/clientapp/src/api/` の差分を API の変更と一緒にコミットする。生成物は手で編集しない。
