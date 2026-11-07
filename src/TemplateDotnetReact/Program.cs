@@ -54,5 +54,5 @@ await app.RunAsync();
 
 internal sealed record Greeting(string Message);
 
-// Expose the entry point to WebApplicationFactory.
+/// <summary>Exposes the application entry point to WebApplicationFactory.</summary>
 public partial class Program;

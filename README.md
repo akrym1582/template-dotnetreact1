@@ -28,7 +28,7 @@ ASP.NET Core から `src/TemplateDotnetReact/clientapp/openapi.json` を出力�
 ## 検証と公開
 
 ```sh
-dotnet test
+dotnet test -warnaserror
 npm --prefix src/TemplateDotnetReact/clientapp test
 npm --prefix src/TemplateDotnetReact/clientapp run lint
 npm --prefix src/TemplateDotnetReact/clientapp run format:check
@@ -40,3 +40,7 @@ xUnit の統合テストは ASP.NET Core のテストホストで API を検証�
 `dotnet publish` が npm の依存関係を復元し、フロントエンドをビルドして公開先の `wwwroot/` に含めます。公開環境では ASP.NET Core が画面と API を同じオリジンで配信します。Node.js は公開物の作成時に使用します。
 
 公開物をローカルで確認するには、`artifacts/publish` へ移動して `dotnet TemplateDotnetReact.dll --urls http://localhost:5080` を実行します。
+
+## 開発手順とルール
+
+仕様の整理、API クライアントの更新、コード品質とテストの手順は [AGENTS.md](AGENTS.md#作業別の手順) から参照できます。詳細は `.agents/skills/` にまとめています。スキルの探索先が異なるエージェントでも、AGENTS.md のリンクから同じ手順を参照できます。
