@@ -25,6 +25,10 @@ npm --prefix src/TemplateDotnetReact/clientapp run update-api
 
 ASP.NET Core から `src/TemplateDotnetReact/clientapp/openapi.json` を出力し、`openapi2aspida` で `src/TemplateDotnetReact/clientapp/src/api/` を再生成します。スキーマ出力用ホストは一時ポートを使うため、開発サーバーの起動中でも実行できます。生成された両方の差分を API の変更と一緒にコミットします。
 
+## 依存関係
+
+NuGet のバージョンはルートの `Directory.Packages.props` で管理します。各プロジェクトの `PackageReference` にはバージョンを指定しません。aspida と SWR（`@aspida/swr` を含む）は `src/TemplateDotnetReact/clientapp/package.json` で管理します。
+
 ## 検証と公開
 
 ```sh

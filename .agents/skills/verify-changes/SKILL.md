@@ -8,6 +8,7 @@ description: C# と React の変更のレビュー、StyleCop・ESLint・Prettie
 ## コード品質
 
 - C# の StyleCop は `Directory.Build.props` で有効にし、除外は各 `.csproj` の `NoWarn` に置く。指定の除外に含まれない診断はコードやコメントを直して解消する。
+- NuGet のバージョンを追加・変更するときは、ルートの `Directory.Packages.props` を更新する。各 `PackageReference` にはバージョンを指定しない。
 - XML コメントは日本語で、初めて読む人が理解できるように役割、使う場面、引数や戻り値の意味を書く。処理の流れで理由が読み取りにくい箇所は、制約や判断理由をコメントに残す。コードをそのまま言い換えるコメントは避ける。
 - React は ESLint で静的検査し、Prettier で変更した手書きファイルを整形する。生成物は再生成で揃える。
 - リポジトリのルートから変更に関係するコマンドを実行する。公開経路の変更は publish 後の画面と API も確認する。
