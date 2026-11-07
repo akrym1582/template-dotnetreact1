@@ -28,10 +28,14 @@ ASP.NET Core から `src/TemplateDotnetReact/clientapp/openapi.json` を出力�
 ## 検証と公開
 
 ```sh
+dotnet test
+npm --prefix src/TemplateDotnetReact/clientapp test
 npm --prefix src/TemplateDotnetReact/clientapp run lint
 npm --prefix src/TemplateDotnetReact/clientapp run format:check
 dotnet publish src/TemplateDotnetReact -c Release -o artifacts/publish
 ```
+
+xUnit の統合テストは ASP.NET Core のテストホストで API を検証します。React のテストは Vitest と React Testing Library で実行します。フロントエンドのテストには、開発サーバーや API の起動は不要です。
 
 `dotnet publish` が npm の依存関係を復元し、フロントエンドをビルドして公開先の `wwwroot/` に含めます。公開環境では ASP.NET Core が画面と API を同じオリジンで配信します。Node.js は公開物の作成時に使用します。
 

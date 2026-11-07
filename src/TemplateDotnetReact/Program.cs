@@ -53,3 +53,6 @@ if (exportOpenApi)
 await app.RunAsync();
 
 internal sealed record Greeting(string Message);
+
+// Expose the entry point to WebApplicationFactory.
+public partial class Program;

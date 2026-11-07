@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TemplateDotnetReact/TemplateDotnetReact.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TemplateDotnetReact.Tests/TemplateDotnetReact.Tests.csproj" />
+  </Folder>
+</Solution>
