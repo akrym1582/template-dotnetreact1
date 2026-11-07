@@ -2,7 +2,7 @@
 **/obj/
 .vs/
 *.user
-clientapp/node_modules/
-clientapp/dist/
+src/TemplateDotnetReact/clientapp/node_modules/
+src/TemplateDotnetReact/clientapp/dist/
 *.tsbuildinfo
 artifacts/
