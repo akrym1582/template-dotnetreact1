@@ -2,15 +2,18 @@ using System.Diagnostics;
 
 namespace TemplateDotnetReact.Development;
 
-/// <summary>開発ホストと同じ寿命でViteを起動し、watch再起動時の孤児プロセスを防ぎます。</summary>
-/// <param name="environment">clientappの基準ディレクトリです。</param>
-/// <param name="lifetime">Viteの起動失敗をホストにも通知します。</param>
-/// <param name="logger">Viteの起動ログです。</param>
+/// <summary>
+/// 開発時に ASP.NET Core と一緒に Vite を動かします。
+/// ASP.NET Core が終了したときは Vite も止め、再起動したアプリが同じポートを使えるようにします。
+/// </summary>
+/// <param name="environment">起動した場所にかかわらず、Web プロジェクト配下の clientapp を見つけるために使います。</param>
+/// <param name="lifetime">Vite が予期せず終了したときに、API だけが動き続けるのを防ぐために使います。</param>
+/// <param name="logger">開発者が画面の URL と起動失敗の原因を確認するために使います。</param>
 public sealed class ClientAppDevServer(IHostEnvironment environment, IHostApplicationLifetime lifetime, ILogger<ClientAppDevServer> logger) : BackgroundService
 {
-    /// <summary>ブラウザからの最初の要求を待たずにnpm run devを開始します。</summary>
-    /// <param name="stoppingToken">ホストの終了通知です。</param>
-    /// <returns>Vite終了までのタスクです。</returns>
+    /// <summary>API の起動と同時に開発画面を使えるよう、ホストのバックグラウンド処理として Vite を起動します。</summary>
+    /// <param name="stoppingToken">ホストの停止を検知し、Vite の終了を待つ処理から後片付けへ移るための通知です。</param>
+    /// <returns>Vite とその起動プロセスの後片付けが終わるまでのタスクです。</returns>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var start = new ProcessStartInfo(OperatingSystem.IsWindows() ? "cmd.exe" : "npm")
@@ -39,12 +42,13 @@ public sealed class ClientAppDevServer(IHostEnvironment environment, IHostApplic
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
-            // npmだけでなく配下のViteも終了し、次のwatch起動へポートを引き渡します。
+            // ホスト停止による待機の中断は正常な終了として扱う。
         }
         finally
         {
             if (!process.HasExited)
             {
+                // npm の子プロセスである Vite も終了させ、開発用ポートを解放する。
                 process.Kill(entireProcessTree: true);
             }
 

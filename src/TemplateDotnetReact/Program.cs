@@ -34,7 +34,8 @@ app.MapFallbackToFile("index.html");
 
 if (exportOpenApi)
 {
-    // Start routing so Swagger can discover minimal APIs. Use an ephemeral loopback port.
+    // Swagger が Minimal API を列挙できるようにホストを起動する。
+    // 開発サーバーとポートが競合しないよう、OS が選ぶ一時ポートを使う。
     app.Urls.Clear();
     app.Urls.Add("http://127.0.0.1:0");
     await app.StartAsync();
@@ -52,7 +53,12 @@ if (exportOpenApi)
 
 await app.RunAsync();
 
+/// <summary>サンプル画面が API との接続を確認するための応答です。</summary>
+/// <param name="Message">画面に表示する挨拶文です。JSON では message として返します。</param>
 internal sealed record Greeting(string Message);
 
-/// <summary>Exposes the application entry point to WebApplicationFactory.</summary>
+/// <summary>
+/// 結合テストからアプリの起動処理を参照するための型です。
+/// テストでも本番と同じ API ルートやサービス登録を使えます。
+/// </summary>
 public partial class Program;
